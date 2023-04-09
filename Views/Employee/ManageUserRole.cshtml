@@ -1,0 +1,27 @@
+﻿@model VacationManager.ViewModels.ManageUserRoleViewModel
+@{
+    ViewData["Title"] = "Manage User Role";
+}
+
+<h1>Manage Role for @Model.UserName</h1>
+
+<form asp-action="ManageUserRole" asp-controller="Employee" method="post">
+    <input type="hidden" asp-for="UserId" />
+    <div class="form-group">
+        <label for="selectedRoles">Select Role(s)</label>
+        <select asp-for="SelectedRoles" asp-items="@(new SelectList(Model.AllRoles))" class="form-control" id="selectedRoles" multiple>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Details" asp-route-id="@Model.UserId" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <script>
+        // Pre-select the current user roles in the multiple select box
+        $(document).ready(function () {
+            var userRoles = @Html.Raw(Json.Serialize(Model.UserRoles));
+            $("#selectedRoles").val(userRoles);
+        });
+    </script>
+}
