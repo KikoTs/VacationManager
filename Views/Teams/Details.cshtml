@@ -1,0 +1,81 @@
+﻿@model TeamDetailsViewModel
+@{
+    ViewData["Title"] = Model.TeamData.Name;
+}
+
+<h1>Details</h1>
+
+<div class="details">
+    <h4>@Model.TeamData.Name</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Name
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.TeamData.Name
+        </div>
+    </div>
+    @if (Model.TeamData.Leader != null)
+    {
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Leader
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.TeamData.Leader.FirstName @Model.TeamData.Leader.LastName
+        </div>
+    </div>
+    }
+    @if (Model.TeamData.Project != null)
+    {
+        <div class="row">
+            <div class="col-md-3 col-12">
+                Project
+            </div>
+            <div class="col-md-9 col-12">
+                @Model.TeamData.Project.Name
+            </div>
+        </div>  
+    }
+
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Members
+        </div>
+        <div class="col-md-9 col-12">
+            @foreach (var member in Model.TeamData.Members)
+            {
+                <div class="row">
+                    <div class="col-8">@member.FirstName @member.LastName</div>
+                    <div class="col-4">
+                        <form asp-action="RemoveFromTeam" asp-route-teamId="@Model.TeamId" asp-route-userId="@member.Id">
+                            <input type="submit" class="btn btn-danger" value="Remove">
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Add user to team
+        </div>
+        <div class="col-md-9 col-12">
+            <form asp-action="AddToTeam">
+                <input asp-for="TeamId" type="hidden"/>
+                <select asp-for="UserToAddId" class="form-control">
+                    @foreach(AppUser userNotInTeam in Model.UsersNotInTeam)
+                    {
+                        <option value="@userNotInTeam.Id">@userNotInTeam.FirstName @userNotInTeam.LastName</option>
+                    }
+                </select>
+                <input type="submit" class="btn btn-success" value="Add"/>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TeamData.Id" class="text-warning">Edit</a> |
+    <a asp-action="Index" class="text-info">Back to List</a>
+</div>

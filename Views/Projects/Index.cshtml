@@ -1,0 +1,44 @@
+﻿@model List<Project>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>Projects</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Project Name
+            </th>
+            <th>
+               Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in Model)
+        {
+        <tr>
+            <td>
+                @project.Name
+            </td>
+            <td>
+                @project.Description
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@project.Id" class="text-warning">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@project.Id" class="text-info">Details</a> |
+                <form asp-action="Delete" asp-route-id="@project.Id" class="delete-button">
+                        <input class="text-danger" type="submit" value="Delete" />
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

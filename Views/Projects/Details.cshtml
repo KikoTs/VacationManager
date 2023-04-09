@@ -1,0 +1,69 @@
+﻿@model ProjectDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Project.Name;
+}
+
+<h1>Details</h1>
+
+<div class="details">
+    <h4>@Model.Project.Name</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Name
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.Project.Name
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Description
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.Project.Description
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Teams at work
+        </div>
+        <div class="col-md-9 col-12">
+            @foreach (var team in Model.Project.TeamsAtWork)
+            {
+                <div class="row">
+                    <div class="col-8">@team.Name</div>
+                    <div class="col-4">
+                        <form asp-action="RemoveTeamFromProject" asp-route-teamId="@team.Id" asp-route-projectId="@Model.Project.Id">
+                            <input type="submit" class="btn btn-danger" value="Remove">
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Add team to project
+        </div>
+        <div class="col-md-9 col-12">
+            <form asp-action="AddTeamToProject">
+                <input asp-for="ProjectId" type="hidden" />
+                <select asp-for="TeamToAddId" class="form-control">
+                    @foreach (Team team in Model.TeamsWithoutProject)
+                    {
+                        <option value="@team.Id">@team.Name</option>
+                    }
+                </select>
+                <input type="submit" class="btn btn-success" value="Add" />
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Project.Id" class="text-warning">Edit</a> |
+    <a asp-action="Index" class="text-info">Back to List</a>
+</div>
+
+

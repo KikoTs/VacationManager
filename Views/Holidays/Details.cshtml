@@ -1,0 +1,76 @@
+﻿@model Holiday
+
+@{
+    ViewData["Title"] = "Holiday details";
+}
+
+<h1>Details</h1>
+
+<div class="details">
+    <h4>Holiday</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Start date
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.StartDate
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            End date
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.EndDate
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-3 col-12">
+            Date of request
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.DateOfRequest
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Half day
+        </div>
+        <div class="col-md-9 col-12">
+            @Html.DisplayFor(model => model.IsHalfDay)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Approved
+        </div>
+        <div class="col-md-9 col-12">
+            @Html.DisplayFor(model => model.IsApproved)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Type
+        </div>
+        <div class="col-md-9 col-12">
+            @Html.DisplayFor(model => model.Type)
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.PatientNote))
+    {
+            <div class="row">
+        <div class="col-md-3 col-12">
+            Patient note
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.PatientNote
+        </div>
+    </div>
+    }
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="text-warning">Edit</a> |
+    <a asp-action="Index" class="text-info">Back to List</a>
+</div>

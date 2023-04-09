@@ -1,0 +1,44 @@
+﻿@model TeamEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Team</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Team.Id" />
+            <input type="hidden" asp-for="OldTeamLeadId" />
+            <div class="form-group">
+                <label asp-for="Team.Name" class="control-label"></label>
+                <input asp-for="Team.Name" class="form-control" />
+                <span asp-validation-for="Team.Name" class="text-danger"></span>
+            </div>
+            <label asp-for="Team.LeaderId" class="control-label"></label>
+            <select asp-for="Team.LeaderId" class="form-control">
+                <option value="@Model.Team.Leader.Id" selected>@Model.Team.Leader.FirstName @Model.Team.Leader.LastName (current)</option>
+                @foreach (AppUser userNotLeading in Model.UserNotLeading)
+                {
+                    <option value="@userNotLeading.Id">@userNotLeading.FirstName @userNotLeading.LastName</option>
+                }
+            </select>
+            <span asp-validation-for="Team.LeaderId" class="text-danger"></span>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

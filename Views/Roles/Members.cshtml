@@ -1,0 +1,23 @@
+﻿@model RolesMembersViewModel
+@{
+    ViewData["Title"] = Model.RoleName;
+}
+
+<h1>@Model.RoleName</h1>
+
+<div class="details">
+    <h4>Members</h4>
+    <hr />
+    <div class="row">
+        @foreach (var member in Model.Members)
+        {
+            <div class="row">
+                @member.FirstName
+                @member.LastName
+            </div>
+        }
+    </div>
+</div>
+<div>
+    <a asp-action="Index" class="text-info">Back to Roles</a>
+</div>

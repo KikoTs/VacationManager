@@ -1,0 +1,43 @@
+﻿@model List<AppUser>
+@{
+    ViewData["Title"] = "Employees";
+}
+<h1>Employees</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Names
+            </th>
+            <th>
+                Role
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var user in Model) {
+        <tr>
+            <td>
+                @user.FirstName @user.LastName
+            </td>
+            <td>
+                    @user.MainRole
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id" class="text-warning">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@user.Id" class="text-info">Details</a>
+                    @if (user.MainRole != "Chief Executive Officer")
+                    {
+                        <span>|</span>
+                        <form asp-action="Delete" asp-route-id="@user.Id" class="delete-button">
+                            <input class="text-danger" type="submit" value="Delete"> 
+                        </form>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

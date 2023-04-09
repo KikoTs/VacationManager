@@ -1,0 +1,18 @@
+﻿@model RolesEditViewModel
+
+<h1>Role @Model.RoleName</h1>
+<form asp-action="ChangeRoleName">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="RoleId" type="hidden"/>
+    <div class="form-group">
+        <label asp-fo r="RoleName" class="control-label"></label>
+        <input asp-for="RoleName" class="form-control" />
+        <span asp-validation-for="RoleName" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-success" value="Change name" />
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

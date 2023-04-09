@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Holiday>
+
+@{
+    ViewData["Title"] = "Requests";
+}
+
+<h1>Holiday requests</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Requester
+            </th>
+            <th>
+                Start date
+            </th>
+            <th>
+                End date
+            </th>
+            <th>
+                Request date
+            </th>
+            <th>
+                Half day
+            </th>
+            <th>
+                Approved
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Patient note
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>
+                    @request.Requester.FirstName @request.Requester.LastName
+                </td>
+                <td>
+                    @request.StartDate
+                </td>
+                <td>
+                    @request.EndDate
+                </td>
+                <td>
+                    @request.DateOfRequest
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => request.IsHalfDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => request.IsApproved)
+                </td>
+                <td>
+                    @request.Type
+                </td>
+                <td>
+                    @request.PatientNote
+                </td>
+                <td>
+                    @if(!request.IsApproved){
+                        <form asp-action="Delete" asp-route-id="@request.Id" class="delete-button">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </form>
+                        <form asp-action="ApproveRequest" asp-route-id="@request.Id" class="delete-button">
+                            <input type="submit" value="Approve" class="btn btn-success" />
+                       </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

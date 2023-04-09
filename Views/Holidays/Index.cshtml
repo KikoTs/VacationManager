@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Holiday>
+
+@{
+    ViewData["Title"] = "Your requests";
+}
+
+<h1>Your requests</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Start date
+            </th>
+            <th>
+                End date
+            </th>
+            <th>
+                Request date
+            </th>
+            <th>
+                Half day
+            </th>
+            <th>
+                Approved
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Patient note
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var request in Model) {
+        <tr>
+            <td>
+                @request.StartDate
+            </td>
+            <td>
+                    @request.EndDate
+            </td>
+            <td>
+                    @request.DateOfRequest
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => request.IsHalfDay)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => request.IsApproved)
+            </td>
+            <td>
+                    @request.Type
+            </td>
+            <td>
+                    @request.PatientNote
+            </td>
+            <td>
+
+                    <a asp-action="Details" asp-route-id="@request.Id" class="text-info">Details</a> 
+                    @if (!request.IsApproved)
+                    {
+                        <span>|</span>
+                        <a asp-action="Edit" asp-route-id="@request.Id" class="text-warning">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@request.Id" class="delete-button"> |
+                            <input class="text-danger" type="submit" value="Delete"/>
+                        </form>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,80 @@
+﻿@model EmployeeDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.User.FirstName + " " + Model.User.LastName;
+}
+
+<h1>Details</h1>
+
+<div class="details">
+    <h4>@Model.User.FirstName @Model.User.LastName</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3 col-12">
+            First name
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.User.FirstName
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            Last name
+        </div>
+        <div class="col-md-9 col-12">
+            @Model.User.LastName
+        </div>
+    </div>
+        @if (Model.User.PhoneNumber != null)
+    {
+        <div class="row">
+            <div class="col-md-3 col-12">
+                Phone number
+            </div>
+            <div class="col-md-9 col-12">
+                @Model.User.PhoneNumber
+            </div>
+        </div>
+    }
+
+    @if (Model.User.Team != null)
+    {
+        <div class="row">
+            <div class="col-md-3 col-12">
+                Team
+            </div>
+            <div class="col-md-9 col-12">
+                @Model.User.Team.Name 
+                <form asp-action="RemoveFromTeam">
+                    <input asp-for="UserId" type="hidden" />
+                    <input asp-for="TeamId" type="hidden" /> 
+                    <input type="submit" class="btn btn-danger" value="Remove from team" />
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-3 col-12">
+                Add to team
+            </div>
+            <div class="col-md-9 col-12">
+                <form asp-action="AddToTeam" asp-route-userId="@Model.User.Id">
+                    <input asp-for="UserId" type="hidden" />
+                    <select asp-for="TeamId" class="form-control">
+                        @foreach (var team in Model.Teams)
+                        {
+                            <option value="@team.Id">@team.Name</option>
+                        }
+                    </select>
+                    <input type="submit" class="btn btn-success" value="Add" />
+                </form>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.UserId" class="text-warning">Edit</a> |
+    <a asp-action="Index" class="text-info">Back to List</a>
+</div>

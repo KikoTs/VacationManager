@@ -1,0 +1,46 @@
+﻿@model Dictionary<string, int>
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Role
+            </th>
+            <th>
+                Members
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>
+                    @role.Key
+                </td>
+                <td>
+                    @role.Value
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@role.Key" class="text-warning">Edit</a>
+                    |
+                    <a asp-action="Members" asp-route-id="@role.Key" class="text-info">See members</a>
+                    |
+                    <form asp-action="Delete" asp-route-roleName="@role.Key" class="delete-button">
+                        <input type="submit" class="text-danger" value="Delete role" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
